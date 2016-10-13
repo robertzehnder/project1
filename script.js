@@ -81,7 +81,7 @@ $( document ).ready(function() {
 //--------Generate Random Number--------
 
     function randNum() {
-      return parseInt(Math.random() * (3 - 0) + 0);
+      return parseInt(Math.random() * (4 - 0) + 0);
     }
 
 
