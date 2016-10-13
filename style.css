@@ -1,0 +1,45 @@
+.board {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.colorSquares {
+  width: 150px;
+  height: 150px;
+  opacity: 0.4;
+}
+
+#userAlerts {
+  display: none;
+}
+
+/*.colorSquares:hover {
+  opacity: 1;
+}*/
+
+/*#yellow:hover {
+  opacity: 1;
+}*/
+
+#red {
+  background-color: red;
+}
+
+#green {
+  background-color: green;
+}
+
+#blue {
+  background-color: blue;
+}
+
+#yellow {
+  background-color: yellow;
+  opacity: 0.3;
+}
