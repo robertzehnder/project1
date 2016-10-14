@@ -1,34 +1,57 @@
+h1 {
+  /*text-align: center;*/
+  padding-left: 40px;
+}
+
+body {
+  background-image: url('paven.png');
+}
+
 .board {
   width: 300px;
   height: 300px;
   border-radius: 50%;
   border: 2px solid black;
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
+  vertical-align: middle;
   overflow: hidden;
-  margin: 0 auto;
+  margin-left: 0 auto;
+  margin-right: 0 auto;
 }
 
 .colorSquares {
   width: 150px;
   height: 150px;
-  opacity: 0.4;
+  position: relative;
+  /*opacity: 0.3;*/
+}
+
+#info {
+  /*border: 2px solid black;*/
+  width: 200px;
+  /*padding-top: 150px;*/
+  /*margin-top: 50px;*/
+  display: inline-block;
+}
+
+main {
+  border: 2px solid black;
+  padding-left: 50px;
+  padding: 50px;
+  max-width: 50%;
+  margin: 0 auto;
+  background-color: white;
 }
 
 #userAlerts {
   display: none;
 }
 
-/*.colorSquares:hover {
-  opacity: 1;
-}*/
-
-/*#yellow:hover {
-  opacity: 1;
-}*/
-
 #red {
   background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
 }
 
 #green {
@@ -41,5 +64,4 @@
 
 #yellow {
   background-color: yellow;
-  opacity: 0.3;
 }

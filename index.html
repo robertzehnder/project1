@@ -10,23 +10,27 @@
   <title>Simon!</title>
 </head>
 <body>
+  <header>
+    <h1>Simon Sez</h1>
+  </header>
 
-<!-- Gameboard with the color buttons -->
-  <div class="board">
-    <div class="colorSquares" id="red" value="red"></div>
-    <div class="colorSquares" id="green" value="green"></div>
-    <div class="colorSquares" id="blue" value="blue"></div>
-    <div class="colorSquares" id="yellow" value="yellow"></div>
-  </div>
+  <main>
+    <!-- Scoreboard -->
+      <div class="xxx" id="info">
+        <div id="round" class="top">Round: </div>
+        <p class="top">Player Name: Rob</p>
+        <p id="userAlert" class="top">Announcements</p>
+        <input type="submit" value="Start Round" text='Start Round' id="start" class="top"/>
+      </div>
 
-<!-- Scoreboard -->
-  <div class="info">
-    <div class="round">Round: </div>
-    <p>Player Name: Rob</p>
-    <input type="submit" value="Start Round" text='Start Round' id="start"/>
-    <p id="userAlert">sssss</p>
-  </div>
-
+  <!-- Gameboard with the color buttons -->
+    <div class="xxx board">
+      <div class="colorSquares" id="red" value="red"></div>
+      <div class="colorSquares" id="green" value="green"></div>
+      <div class="colorSquares" id="blue" value="blue"></div>
+      <div class="colorSquares" id="yellow" value="yellow"></div>
+    </div>
+  </main>
 
 </body>
 </html>

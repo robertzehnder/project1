@@ -1,16 +1,18 @@
 $( document ).ready(function() {
 //--------Variables for the Game--------
     var colors = ['red', 'green', 'yellow', 'blue']; //
-    var simonSaid = []; //Contains randomly generated pattern for player to match
-    var playerResponse = []; //player responses to compare to what simon displayed
+    simonSaid = []; //Contains randomly generated pattern for player to match
+    playerResponse = []; //player responses to compare to what simon displayed
     var round = 0; //How far has the user gotten in the game
     var inProgress = false;
+    //var selection = "";
 
 //--------Start Round--------
+
   $('#start').on('click', function(){ //Creates new round for player
 
     var displayRound = round + 1;
-    $('.round').text("Round: " + displayRound);
+    $('#round').text("Round: " + displayRound);
     inProgress = true; //sets flag so system knows round is in progress
     $('#userAlert').text("Round in Progress");
 
@@ -19,17 +21,36 @@ $( document ).ready(function() {
       while (num === undefined) {
         num = randNum();
       }
-      simonSaid.push(colors[randNum()]);
+      simonSaid.push(colors[num]);
+      console.log(colors[num]);
     }
 
-    for (i=0;i<simonSaid.length;i++) { //Displays pattern for user to match
-      var selection = '#' + simonSaid[i];
-      $(selection).css('opacity', '1');
-      setTimeout(function() { //delays turning off highlight
-          $(selection).css('opacity', '.3'); // Turns color faded again
-      }, 500);
+
+
+
+    console.log("Here are the things to be flashed: " + simonSaid);
+    for (let i=0;i<simonSaid.length;i++) { //Displays pattern for user to match
+
+
+
+
+       (function (i) {
+         var timer = 500 * (1+i);
+         var selection = '#' + simonSaid[i]; // Tell the board what to flash
+         console.log('This is what is about to be sent in: #' + simonSaid[i]);
+         setTimeout(function eh(){
+           console.log("The timer has been triggered and will now flash: "+ selection);
+           $(selection).fadeOut(500).fadeIn(500)
+         }, timer);
+       })(i);
     }
+
+
   })
+
+   function fader (div) {
+       $(div).fadeOut(500).fadeIn(500);
+   }
 
 //--------Capture Player Selection--------
 
@@ -42,7 +63,7 @@ $( document ).ready(function() {
       var selection = $(this).attr('id');
       console.log(selection);
       playerResponse.push(selection);
-      // console.log('works'); --- confirmed
+
     }
 
     var nextRound; //declares variable to see if player should advance to the next round
@@ -52,16 +73,18 @@ $( document ).ready(function() {
 
     if (nextRound === false) {
       $('#userAlert').text("You LOSE!!!!!!!!!!");
-      simonSaid = [];
-      playerResponse = [];
-      $(selection).css('opacity', '.3'); // Turns color faded again
+      for (i=0; i <round+1;i++) {
+        simonSaid.pop();
+        playerResponse.pop();
+      }
       round = 0;
     }
     else if (nextRound === true) {
       $('#userAlert').text("Winner!");
-      simonSaid = [];
-      playerResponse = [];
-      $(selection).css('opacity', '.3'); // Turns color faded again
+      for (i=0; i <round+1;i++) {
+        simonSaid.pop();
+        playerResponse.pop();
+      }
       round ++;
     }
   })
@@ -83,7 +106,14 @@ $( document ).ready(function() {
     function randNum() {
       return parseInt(Math.random() * (4 - 0) + 0);
     }
-
-
-
+    // function iifePractice () {
+    //   for (var i = 1; i <= 3; i++) {
+    //     (function(index) {
+    //        setTimeout(function() {
+    //           console.log(index);
+    //        }, 1000);
+    //     })(i);
+    //    }
+    // }
+    // iifePractice ();
 }); //End of Doc Ready function
