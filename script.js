@@ -1,97 +1,112 @@
 $( document ).ready(function() {
 //--------Variables for the Game--------
     var colors = ['red', 'green', 'yellow', 'blue']; //
-    simonSaid = []; //Contains randomly generated pattern for player to match
-    playerResponse = []; //player responses to compare to what simon displayed
-    var round = 0; //How far has the user gotten in the game
-    var inProgress = false;
-    //var selection = "";
+
+    function reset() {
+      simonSaid = []; //Contains randomly generated pattern for player to match
+      playerResponse = []; //player responses to compare to what simon displayed
+      round = 0; //How far has the user gotten in the game
+      inProgress = false;
+      playerTimer = 0;
+      seconds = 0;
+      roundDone = false;
+      score = 0;
+      counter = 0;
+      multiplier = 0;
+      $("#timer").html('Time Left: 0:10');
+      $('#round').text("Round: Begin your Game!");
+      $('#score').text("Score: " + score);
+      $('#start').val("Start Round");
+      $('#start').prop('disabled', false);
+    }
+
+    reset();
 
 //--------Start Round--------
 
   $('#start').on('click', function(){ //Creates new round for player
 
-    var displayRound = round + 1;
-    $('#round').text("Round: " + displayRound);
-    inProgress = true; //sets flag so system knows round is in progress
-    $('#userAlert').text("Round in Progress");
+      $('#start').val("Next Round");
+      $('#start').prop('disabled', true);
+      $('#start').css('background-color', '#5c5c5c');
+      $("#timer").html('Time Left: 0:10');
+      var displayRound = round + 1;
+      $('#round').text("Round: " + displayRound);
+      inProgress = true; //sets flag so system knows round is in progress
+      $('#userAlert').text("Round in Progress");
 
-    for (i=0;i<round+1;i++){// creates color to put into array
       var num = randNum();
       while (num === undefined) {
         num = randNum();
       }
       simonSaid.push(colors[num]);
-      console.log(colors[num]);
-    }
 
+      for (let i=0;i<simonSaid.length;i++) { //Displays pattern for user to match
 
+         (function (i) {
 
+           var timer = 500 * (1+i);
+           var selection = '#' + simonSaid[i]; // Tell the board what to flash
+           setTimeout(function eh(){
+             $(selection).fadeOut(500).fadeIn(500)
+           }, timer);
+         })(i);
 
-    console.log("Here are the things to be flashed: " + simonSaid);
-    for (let i=0;i<simonSaid.length;i++) { //Displays pattern for user to match
-
-
-
-
-       (function (i) {
-         var timer = 500 * (1+i);
-         var selection = '#' + simonSaid[i]; // Tell the board what to flash
-         console.log('This is what is about to be sent in: #' + simonSaid[i]);
-         setTimeout(function eh(){
-           console.log("The timer has been triggered and will now flash: "+ selection);
-           $(selection).fadeOut(500).fadeIn(500)
-         }, timer);
-       })(i);
-    }
-
-
+      }
   })
-
-   function fader (div) {
-       $(div).fadeOut(500).fadeIn(500);
-   }
 
 //--------Capture Player Selection--------
 
   $('.colorSquares').on('click', function () {
 
-    if (inProgress === false) { //Makes sure a round is being played before a comparison happens
-      return;
-    }
-    else {
-      var selection = $(this).attr('id');
-      console.log(selection);
-      playerResponse.push(selection);
-
-    }
-
-    var nextRound; //declares variable to see if player should advance to the next round
-    if (simonSaid.length === playerResponse.length) {
-      nextRound = compare();
-    }
-
-    if (nextRound === false) {
-      $('#userAlert').text("You LOSE!!!!!!!!!!");
-      for (i=0; i <round+1;i++) {
-        simonSaid.pop();
-        playerResponse.pop();
+      if (counter === 0) {
+        countdown('begin');
+        counter++;
       }
-      round = 0;
-    }
-    else if (nextRound === true) {
-      $('#userAlert').text("Winner!");
-      for (i=0; i <round+1;i++) {
-        simonSaid.pop();
-        playerResponse.pop();
+
+      if (inProgress === false) { //Makes sure a round is being played before a comparison happens
+        return;
       }
-      round ++;
-    }
+      else {
+        var selection = $(this).attr('id');
+        playerResponse.push(selection);
+      }
+      var nextRound; //declares variable to see if player should advance to the next round
+      if (simonSaid.length === playerResponse.length) {
+        nextRound = compare();
+        endRound(nextRound);
+      }
   })
 
+  function endRound (nextRoundTF) {
+      if (nextRoundTF === false) {
+        $('#userAlert').text("Sorry, your selection does not match");
+        for (i=0; i <round+1;i++) {
+          simonSaid.pop();
+          playerResponse.pop();
+        }
+        reset();
+
+      }
+      else if (nextRoundTF === true) {
+        $('#userAlert').text("Winner!");
+        for (i=0; i <round+1;i++) {
+          playerResponse.pop();
+        }
+        round ++;
+        score = score + (seconds*round);
+        $("#score").html('Score: ' + score);
+        counter = 0;
+        $('#start').prop('disabled', false);
+        $('#start').css('background-color', '');
+      }
+  }
 //--------Compare user response to what Simon said--------
 
   function compare() {
+    countdown('end');
+    //roundDone = true;
+    //tick(roundDone);
     var winner = true;
     for (i=0;i<simonSaid.length;i++) {
       if (simonSaid[i] !== playerResponse[i]) {
@@ -106,14 +121,29 @@ $( document ).ready(function() {
     function randNum() {
       return parseInt(Math.random() * (4 - 0) + 0);
     }
-    // function iifePractice () {
-    //   for (var i = 1; i <= 3; i++) {
-    //     (function(index) {
-    //        setTimeout(function() {
-    //           console.log(index);
-    //        }, 1000);
-    //     })(i);
-    //    }
-    // }
-    // iifePractice ();
+
+//--------Timer Function--------
+
+  function countdown(doWhat) {
+    var current_minutes = 0
+    if (doWhat === 'begin') {
+      seconds = 10;
+      //var mins = minutes;
+      function tick() {
+        var current_minutes = 0
+        seconds--;
+        $("#timer").html('Time Left: ' + current_minutes.toString()+ ":" + (seconds < 10 ? "0" : "") + String(seconds));
+        if (seconds > 0) {
+          x = setTimeout(tick,1000);
+        }
+      }
+      tick();
+      }
+
+    else if (doWhat === 'end') {
+      $("#timer").html('Time Left: ' + current_minutes.toString()+ ":" + (seconds < 10 ? "0" : "") + String(seconds));
+      window.clearTimeout(x);
+    }
+  }
+
 }); //End of Doc Ready function

@@ -8,10 +8,11 @@ body {
 }
 
 .board {
+  background-color: black;
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 8px solid black;
   display: inline-flex;
   flex-wrap: wrap;
   vertical-align: middle;
@@ -50,8 +51,6 @@ main {
 
 #red {
   background-color: red;
-  animation-name: example;
-  animation-duration: 4s;
 }
 
 #green {
