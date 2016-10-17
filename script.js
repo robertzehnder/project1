@@ -43,26 +43,44 @@ $( document ).ready(function() {
 
       for (let i=0;i<simonSaid.length;i++) { //Displays pattern for user to match
 
-         (function (i) {
+          (function (i) {
 
-           var timer = 500 * (1+i);
-           var selection = '#' + simonSaid[i]; // Tell the board what to flash
-           setTimeout(function eh(){
-             $(selection).fadeOut(500).fadeIn(500)
-           }, timer);
-         })(i);
+            var timer = 500 * (1+i);
+            var selection = '#' + simonSaid[i]; // Tell the board what to flash
+            setTimeout(function eh(){
+              $(selection).fadeOut(500).fadeIn(500)
+            }, timer);
+          })(i);
+        //setTimeout(highlight(selection, simonSaid[i]), i * 1000);
+
 
       }
+
+      // function unhighlight (div, color) {
+      //   $(div).css('background-color', color);
+      // }
+      //
+      // function highlight (div, color) {
+      //   $(div).css('background-color','black');
+      //   setTimeout(unhighlight(div, color), 500);
+      // }
   })
 
 //--------Capture Player Selection--------
 
-  $('.colorSquares').on('click', function () {
+  $('.board').on('mouseover', function() {
 
-      if (counter === 0) {
-        countdown('begin');
-        counter++;
-      }
+    if (inProgress === false) { //Makes sure a round is being played before a comparison happens
+      return;
+    }
+
+    if (counter === 0) {
+      countdown('begin');
+      counter++;
+    }
+  })
+
+  $('.colorSquares').on('click', function () {
 
       if (inProgress === false) { //Makes sure a round is being played before a comparison happens
         return;
@@ -135,6 +153,12 @@ $( document ).ready(function() {
         $("#timer").html('Time Left: ' + current_minutes.toString()+ ":" + (seconds < 10 ? "0" : "") + String(seconds));
         if (seconds > 0) {
           x = setTimeout(tick,1000);
+        }
+        if (seconds === 0) {
+          reset();
+          $('#userAlert').text("Sorry, you've run out of time!");
+          $('#start').css('background-color', '');
+          return;
         }
       }
       tick();
