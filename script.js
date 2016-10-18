@@ -195,7 +195,7 @@ $( document ).ready(function() {
     else if (doWhat === 'end') {
       window.clearTimeout(x);
       $("#timer").html('Time Left: ' + current_minutes.toString()+ ":" + (seconds < 10 ? "0" : "") + String(seconds));
-      seconds = 10;
+      // seconds = 10;
     }
   }
 
