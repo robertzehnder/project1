@@ -24,6 +24,7 @@ $( document ).ready(function() {
       $('#start').val("Start Round");
       $('#start').prop('disabled', false);
       $('#start').css('background-color', '');
+      // tick('end');
     }
 
     reset();
@@ -52,11 +53,11 @@ $( document ).ready(function() {
 
           (function (i) {
 
-            //var timer = 500 * (1+i);
+            var timer = 1000 * (1+i);
             var selection = '#' + simonSaid[i]; // Tell the board what to flash
             setTimeout(function eh(){
               $(selection).fadeOut(500).fadeIn(500)
-            }, 500);
+            }, timer);
           })(i);
         //setTimeout(highlight(selection, simonSaid[i]), i * 1000);
 
@@ -115,14 +116,17 @@ $( document ).ready(function() {
 
       }
       else if (nextRoundTF === true) {
+        inProgress = false
         $('#userAlert').text("Winner!");
         for (i=0; i <round+1;i++) {
           playerResponse.pop();
         }
         round ++;
         score = score + (seconds*round);
+        countdown('end');
         $("#score").html('Score: ' + score);
         counter = 0;
+        seconds = 10;
         $('#start').prop('disabled', false);
         $('#start').css('background-color', '');
       }
@@ -168,13 +172,18 @@ $( document ).ready(function() {
           $('#start').css('background-color', '');
           return;
         }
+        if (inProgress === false){
+          $('#start').css('background-color', '');
+          return;
+        }
       }
       tick();
       }
 
     else if (doWhat === 'end') {
-      $("#timer").html('Time Left: ' + current_minutes.toString()+ ":" + (seconds < 10 ? "0" : "") + String(seconds));
       window.clearTimeout(x);
+      $("#timer").html('Time Left: ' + current_minutes.toString()+ ":" + (seconds < 10 ? "0" : "") + String(seconds));
+      seconds = 10;
     }
   }
 
