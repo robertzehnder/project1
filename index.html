@@ -7,17 +7,27 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
   <script type="text/javascript" src='script.js'></script>
   <link rel="stylesheet" href="style.css" media="screen" title="no title">
+  <link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
   <title>Simon!</title>
 </head>
 <body>
   <header>
-    <h1>Simon Sez</h1>
+    <!-- <h1>Simon Sez</h1> -->
   </header>
 
   <main>
+
+  <div class="titleHolder">
+    <h1 id="title">Simon Says!</h1>
+  </div>
+  <div class="clearfix">
+<br/><br/>
+  </div>
+
+
     <!-- Scoreboard -->
       <div class="xxx" id="info">
-        <p class="top">Player Name: Rob</p>
+        <p class="top" id="name">Player Name: </p>
         <div id="score" class="top">Score: </div>
         <div id="round" class="top">Round: </div>
         <div id="timer" class="top">Time Left: </div>
@@ -33,6 +43,7 @@
       <div class="colorSquares" id="blue" value="blue"></div>
       <div class="colorSquares" id="yellow" value="yellow"></div>
     </div>
+
   </main>
 
 </body>

@@ -1,4 +1,9 @@
 $( document ).ready(function() {
+
+  var name = prompt("Enter Your Name");
+
+  $('#name').text("Player Name: " + name)
+
 //--------Variables for the Game--------
     var colors = ['red', 'green', 'yellow', 'blue']; //
 
@@ -18,6 +23,7 @@ $( document ).ready(function() {
       $('#score').text("Score: " + score);
       $('#start').val("Start Round");
       $('#start').prop('disabled', false);
+      $('#start').css('background-color', '');
     }
 
     reset();
@@ -41,15 +47,16 @@ $( document ).ready(function() {
       }
       simonSaid.push(colors[num]);
 
+      console.log("Here' what's in the computer generated array: " + simonSaid)
       for (let i=0;i<simonSaid.length;i++) { //Displays pattern for user to match
 
           (function (i) {
 
-            var timer = 500 * (1+i);
+            //var timer = 500 * (1+i);
             var selection = '#' + simonSaid[i]; // Tell the board what to flash
             setTimeout(function eh(){
               $(selection).fadeOut(500).fadeIn(500)
-            }, timer);
+            }, 500);
           })(i);
         //setTimeout(highlight(selection, simonSaid[i]), i * 1000);
 
@@ -88,6 +95,7 @@ $( document ).ready(function() {
       else {
         var selection = $(this).attr('id');
         playerResponse.push(selection);
+        console.log("Here' a player response: " + playerResponse)
       }
       var nextRound; //declares variable to see if player should advance to the next round
       if (simonSaid.length === playerResponse.length) {
