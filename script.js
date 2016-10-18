@@ -4,9 +4,14 @@ $( document ).ready(function() {
 
   $('#name').text("Player Name: " + name);
 
-  var highScore;
+  // var highScore;
+  if (localStorage.getItem('highScore') === undefined) {
+    localStorage.setItem('highScore', 0);
+  }
 
-  $('#highScore').text("High Score: " + localStorage.highScore)
+  $('#highScore').text("High Score: " + localStorage.getItem('highScore'))
+  console.log(localStorage.getItem('highScore'));
+
 //--------Variables for the Game--------
     var colors = ['red', 'green', 'yellow', 'blue']; //
 
@@ -104,9 +109,13 @@ $( document ).ready(function() {
           simonSaid.pop();
           playerResponse.pop();
         }
-        if (score > highScore) {
-          localStorage.highScore = score;
-        }
+          var highScore = localStorage.getItem('highScore');
+          if (score > highScore) {
+            localStorage.setItem("highScore", score);
+          }
+          // Retrieve
+          $('#highScore').text("High Score: " + highScore);
+
         reset();
 
       }
@@ -165,9 +174,13 @@ $( document ).ready(function() {
           reset();
           $('#userAlert').text("Sorry, you've run out of time!");
           $('#start').css('background-color', '');
+          var highScore = localStorage.getItem('highScore');
           if (score > highScore) {
-            localStorage.highScore = score;
+            localStorage.setItem("highScore", score);
           }
+          // Retrieve
+          $('#highScore').text("High Score: " + highScore);
+
           return;
         }
         if (inProgress === false){
