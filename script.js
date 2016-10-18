@@ -2,8 +2,11 @@ $( document ).ready(function() {
 
   var name = prompt("Enter Your Name");
 
-  $('#name').text("Player Name: " + name)
+  $('#name').text("Player Name: " + name);
 
+  var highScore;
+
+  $('#highScore').text("High Score: " + localStorage.highScore)
 //--------Variables for the Game--------
     var colors = ['red', 'green', 'yellow', 'blue']; //
 
@@ -59,19 +62,8 @@ $( document ).ready(function() {
               $(selection).fadeOut(500).fadeIn(500)
             }, timer);
           })(i);
-        //setTimeout(highlight(selection, simonSaid[i]), i * 1000);
-
-
       }
 
-      // function unhighlight (div, color) {
-      //   $(div).css('background-color', color);
-      // }
-      //
-      // function highlight (div, color) {
-      //   $(div).css('background-color','black');
-      //   setTimeout(unhighlight(div, color), 500);
-      // }
   })
 
 //--------Capture Player Selection--------
@@ -111,6 +103,9 @@ $( document ).ready(function() {
         for (i=0; i <round+1;i++) {
           simonSaid.pop();
           playerResponse.pop();
+        }
+        if (score > highScore) {
+          localStorage.highScore = score;
         }
         reset();
 
@@ -170,6 +165,9 @@ $( document ).ready(function() {
           reset();
           $('#userAlert').text("Sorry, you've run out of time!");
           $('#start').css('background-color', '');
+          if (score > highScore) {
+            localStorage.highScore = score;
+          }
           return;
         }
         if (inProgress === false){
