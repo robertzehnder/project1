@@ -32,6 +32,7 @@ $( document ).ready(function() {
       $('#start').val("Start Round");
       $('#start').prop('disabled', false);
       $('#start').css('background-color', '');
+      $('#highScore').text("High Score: " + localStorage.getItem('highScore'))
       // tick('end');
     }
 
