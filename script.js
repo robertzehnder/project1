@@ -5,7 +5,7 @@ $( document ).ready(function() {
   $('#name').text("Player Name: " + name);
 
   // var highScore;
-  if (localStorage.getItem('highScore') === undefined) {
+  if (localStorage.getItem('highScore') === undefined || localStorage.getItem('highScore') === null) {
     localStorage.setItem('highScore', 0);
   }
 
