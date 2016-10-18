@@ -67,7 +67,7 @@ body {
   /*margin-left: 0 auto;*/
   margin-right: -10px;
   box-shadow: 0px 0px 50px #888888;
-
+  float: right;
 
 }
 
@@ -91,12 +91,18 @@ main {
   border: 3px solid black;
   padding-left: 50px;
   padding: 50px;
-  max-width: 50%;
+  max-width: 35%;
   margin: 0 auto;
   background-color: white;
   box-shadow: 0px 0px 100px #888888;
   margin-top: 40px;
   padding-top: -20px;
+  min-height: 400px;
+  min-width: 500px;
+  /*padding-right: 40px;
+  /*padding left: 40px;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
 }
 
 #userAlerts {
